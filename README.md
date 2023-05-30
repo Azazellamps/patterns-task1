@@ -1,0 +1,1 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/oqb76ixyejrn0amd?svg=true)](https://ci.appveyor.com/project/Azazellamps/patterns-task1-2oju0)
