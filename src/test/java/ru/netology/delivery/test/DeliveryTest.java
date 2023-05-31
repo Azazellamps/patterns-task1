@@ -40,8 +40,8 @@ public class DeliveryTest {
         $("[data-test-id='date'] input").setValue(secondMeetingDate);
         $("button.button").click();
         $("[data-test-id='replan-notification'] .notification__content").shouldHave(text("У вас уже запланирована встреча на другую дату. Перепланировать?")).shouldBe(visible);
-        $$("button").find(exactText("Перепланировать")).click();
-        $(byText ("Успешно!"));
+        $("[data-test-id='replan-notification'] button").click();
+        $("[data-test-id='success-notification'] .notification__content").shouldHave(exactText("Встреча успешно запланирована на " + secondMeetingDate)).shouldBe(visible);
 
 
     }
