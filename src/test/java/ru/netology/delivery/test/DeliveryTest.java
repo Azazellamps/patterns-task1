@@ -43,6 +43,7 @@ public class DeliveryTest {
         $$("button").find(exactText("Перепланировать")).click();
         $(byText ("Успешно!"));
 
+
     }
 }
 
