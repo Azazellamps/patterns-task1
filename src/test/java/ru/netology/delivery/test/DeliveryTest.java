@@ -14,6 +14,8 @@ import static com.codeborne.selenide.Selenide.*;
 import static org.openqa.selenium.Keys.BACK_SPACE;
 
 public class DeliveryTest {
+    String Message1 = "Встреча успешно запланирована на ";
+    String Message2 = "У вас уже запланирована встреча на другую дату. Перепланировать?";
 
     @BeforeEach
     void setup() {
@@ -23,6 +25,7 @@ public class DeliveryTest {
     @Test
     @DisplayName("Should successful plan and replan meeting")
     void shouldSuccessfulPlanAndReplanMeeting() {
+
         var validUser = DataGenerator.Registration.generateUser("ru");
         var daysToAddForFirstMeeting = 4;
         var firstMeetingDate = DataGenerator.generateDate(daysToAddForFirstMeeting);
@@ -35,14 +38,13 @@ public class DeliveryTest {
         $("[data-test-id='phone'] input").setValue(validUser.getPhone());
         $("[data-test-id='agreement']").click();
         $$("button").find(exactText("Запланировать")).click();
-        $(byText ("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
+        $("[data-test-id='success-notification'] .notification__content").shouldHave(exactText(Message1+firstMeetingDate)).shouldBe(visible,Duration.ofSeconds(15));
         $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.CONTROL, "a"), BACK_SPACE);
         $("[data-test-id='date'] input").setValue(secondMeetingDate);
         $("button.button").click();
-        $("[data-test-id='replan-notification'] .notification__content").shouldHave(text("У вас уже запланирована встреча на другую дату. Перепланировать?")).shouldBe(visible);
+        $("[data-test-id='replan-notification'] .notification__content").shouldHave(text(Message2)).shouldBe(visible);
         $("[data-test-id='replan-notification'] button").click();
-        $("[data-test-id='success-notification'] .notification__content").shouldHave(exactText("Встреча успешно запланирована на " + secondMeetingDate)).shouldBe(visible);
-
+        $("[data-test-id='success-notification'] .notification__content").shouldHave(exactText(Message1+ secondMeetingDate)).shouldBe(visible);
 
     }
 }
